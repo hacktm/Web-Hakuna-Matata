@@ -265,6 +265,8 @@ class Tips_for_Trip {
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
 		add_action( 'admin_init', array( $this, 'manage_pages' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
+
+		add_action( 'init', array( $this, 'setup_default_categories' ) );
 	}
 
 	public function enqueue_scrips() {
@@ -326,6 +328,14 @@ class Tips_for_Trip {
 		if( !current_user_can('manage_media_library') && current_user_can( 'traveler' ) )
 			$wp_query_obj->set('author', $current_user->ID );
 		return;
+	}
+
+	function setup_default_categories() {
+		foreach ( $this->countries as $code => $name ) {
+			if( ! term_exists( $name, 'category' ) ) {
+				wp_insert_term( $name, 'category', array( 'slug' => $code ) );
+			}
+		}
 	}
 }
 
