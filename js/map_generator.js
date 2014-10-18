@@ -163,4 +163,4 @@ function MapGenerator() {
 
 }
 
-var mapStyle = [];
+var mapStyle = [{"featureType":"landscape.natural.terrain","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]},{"featureType":"landscape.natural.landcover","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#000000"}]},{"featureType":"landscape","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]}];
