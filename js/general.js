@@ -35,7 +35,8 @@
 		$('.full-height').each(function(){
 			var window_height = $(window).outerHeight();
 			var header_height = $('header').outerHeight();
-			$(this).height( window_height - header_height - 70 );
+			var admin_bar_height = $('#wpadminbar').outerHeight();
+			$(this).height( window_height - header_height - admin_bar_height - 40 );
 		});
 		drawGeoMap();
         });

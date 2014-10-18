@@ -272,6 +272,12 @@ class Tips_for_Trip {
 
 		add_action( 'add_meta_boxes', array( $this, 'manage_metaboxes' ) );
 		add_action( 'init', array( $this, 'setup_default_categories' ) );
+		add_filter( 'login_headerurl', array( $this, 'login_logo_url' ) );
+		add_action( 'admin_bar_menu', array( $this, 'remove_nodes'), 999 );
+		add_action( 'admin_head-profile.php', array( $this, 'profile_subject_start' ) );
+		add_action( 'admin_footer-profile.php', array( $this, 'profile_subject_end' ) );
+
+		remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
 	}
 
 	public function enqueue_scrips() {
@@ -296,6 +302,28 @@ class Tips_for_Trip {
 	public function login_enqueue_scrips() {
 		wp_enqueue_style( 'login-style', get_template_directory_uri() . '/css/login.css', array(), $this->version );
 
+	}
+
+	public function login_logo_url() {
+		return home_url();
+	}
+
+	public function remove_personal_options( $subject ) {
+    		$subject = preg_replace( '#<h3>Personal Options</h3>.+?/table>#s', '', $subject, 1 );
+    		return $subject;
+  	}
+
+	public function profile_subject_start() {
+		ob_start( array( $this, 'remove_personal_options' ) );
+	}
+
+	public function profile_subject_end() {
+		ob_end_flush();
+	}
+
+	public function remove_nodes( $wp_admin_bar ) {
+		$wp_admin_bar->remove_node( 'wp-logo' );	
+		$wp_admin_bar->remove_node( 'comments' );	
 	}
 
 	public function edit_capabilities() {

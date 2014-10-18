@@ -1,0 +1,33 @@
+body {
+	background-color: #060;
+}
+
+#login h1 a {
+	width: 320px;
+	height: 86px;
+	background: url('../img/logo-big.png') 0 0 no-repeat transparent;
+}
+
+#registerform,
+#loginform,
+#lostpasswordform  {
+	background-color: #eee;
+	-webkit-box-shadow: 1px 1px 1px 1px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+	-moz-box-shadow:    1px 1px 1px 1px #ccc;  /* Firefox 3.5 - 3.6 */
+	box-shadow:         1px 1px 1px 1px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+#login #nav a,
+#login #backtoblog a {
+	color: #eee;
+}
+
+#login #nav a:hover,
+#login #backtoblog a:hover {
+	color: #ccc;
+}
+
+#wp-submit {
+	background-color: #060;
+	border-color: #060;
+}

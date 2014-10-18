@@ -23,14 +23,14 @@ body {
 header {
 	background-color: #060;
 	padding: 10px 20px;
-	height: 40px;
+	height: 30px;
 }
 
 #logo {
 	float: left;
 	display: block;
 	width: 131px;
-	height: 40px;
+	height: 30px;
 	background: url('img/logo.png') 0 0 no-repeat transparent;
 	text-indent: -1000em;
 }
@@ -41,8 +41,8 @@ header {
 
 #main-menu a {
 	float: left;
-	margin-left: 40px;
-	line-height: 40px;
+	margin-left: 30px;
+	line-height: 30px;
 	color: #fff;
 	font-size: 16px;
 	text-decoration: none;
