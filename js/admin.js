@@ -4,21 +4,25 @@
 		
 		data.addColumn('string', 'Countries');
 		data.addColumn('number', 'Visited');
+		data.addColumn({type:'string', role: 'tooltip'});
 		var countries = $('#travel-map').data('countries');
 		console.log(countries);
 		
 		var countryTable = [];
 		countries.forEach(function(entry){	
-			countryTable.push([entry,1]);
+			countryTable.push([entry,1, 'Visited']);
 		});
 		console.log(countryTable);
 		data.addRows(countryTable);
+
+		//var data = google.visualization.arrayToDataTable(countryTable);
 
 	    var options = {
 		dataMode: 'regions',
 		width: 395,
 		height: 395,
-		colorAxis: {colors: ['#eee', '#060']}
+		colorAxis: {colors: ['#eee', '#060']},
+		legend: 'none'
 	    };
 
 	    var container = document.getElementById('travel-map');
@@ -27,7 +31,7 @@
 	}
 
 	function drawGeoMap() {
-		google.load('visualization', '1', {packages: ['geochart'], callback: drawMap});
+		google.load('visualization', '1.1', {packages: ['geochart'], callback: drawMap});
 	}
 
 	$(document).ready(function() {
