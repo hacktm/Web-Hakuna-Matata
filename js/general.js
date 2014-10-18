@@ -35,7 +35,7 @@
 		$('.full-height').each(function(){
 			var window_height = $(window).outerHeight();
 			var header_height = $('header').outerHeight();
-			$(this).height( window_height - header_height - 40 );
+			$(this).height( window_height - header_height - 75 );
 		});
 		drawGeoMap();
         });
