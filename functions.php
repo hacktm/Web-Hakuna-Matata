@@ -258,8 +258,9 @@ class Tips_for_Trip {
 	}
 
 	public function setup() {
+        add_image_size( 'single-image', 9999, 600, true);
 
-		add_action( 'pre_get_posts', array( $this, 'restrict_media_library' ) );
+        add_action( 'pre_get_posts', array( $this, 'restrict_media_library' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scrips' ) );
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
