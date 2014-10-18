@@ -57,3 +57,27 @@ header {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
+/** Article **/
+
+.alignleft{
+    float: left;
+    margin: 0 10px 10px 0;
+}
+.aligncenter{
+    display: block;
+    margin: 0 auto;
+}
+.alignright{
+    margin: 0 0 10px 10px;
+    float: right;
+}
+
+blockquote{
+    padding-left: 40px;
+    font-style: italic;
+    color: #060;
+    font-weight: bold;
+    border-left: solid;
+    border-left-color: #060;
+}

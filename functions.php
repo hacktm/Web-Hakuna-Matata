@@ -267,6 +267,7 @@ class Tips_for_Trip {
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
 		add_action( 'admin_init', array( $this, 'manage_pages' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
+		add_action( 'save_post', array( $this, 'save_meta_box_data' ) );
 
 		add_action( 'add_meta_boxes', array( $this, 'manage_metaboxes' ) );
 		add_action( 'init', array( $this, 'setup_default_categories' ) );
@@ -276,6 +277,7 @@ class Tips_for_Trip {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'google-geochart', 'https://www.google.com/jsapi', array(), $this->version, true );
 		wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false', array(), $this->version, true );
+		wp_enqueue_script( 'map-generator', get_template_directory_uri() . '/js/map_generator.js', array( 'google-maps' ), $this->version, true );
 		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery', 'google-geochart', 'google-maps' ), $this->version, true );
 
 		wp_enqueue_style( 'general-style', get_template_directory_uri() . '/style.css', array(), $this->version );
@@ -284,7 +286,8 @@ class Tips_for_Trip {
 	public function admin_enqueue_scrips() {
 		wp_enqueue_script( 'google-geochart', 'https://www.google.com/jsapi', array(), $this->version, true );
 		wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false', array(), $this->version, true );
-		wp_enqueue_script( 'admin-js', get_template_directory_uri() . '/js/admin.js', array( 'google-geochart', 'google-maps' ), $this->version, true );
+		wp_enqueue_script( 'map-generator', get_template_directory_uri() . '/js/map_generator.js', array( 'google-maps' ), $this->version, true );
+		wp_enqueue_script( 'admin-js', get_template_directory_uri() . '/js/admin.js', array( 'google-geochart', 'google-maps', 'map-generator' ), $this->version, true );
 
 		wp_enqueue_style( 'admin-style', get_template_directory_uri() . '/css/admin.css', array(), $this->version );
 	}
@@ -361,14 +364,25 @@ class Tips_for_Trip {
 			0 );
 	}
 
-	function location_selection( $id ) {
-		$lat = get_post_meta( $id, 'lat', true );
-		$lng = get_post_meta( $id, 'lng', true );
+	function location_selection( $post ) {
+		$lat = get_post_meta( $post->ID, 'lat', true );
+		$lng = get_post_meta( $post->ID, 'lng', true );
 		?>
-		<div id="location-selection"></div>
-		<label for="lat"></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
-		<label for="lng"></label><input id="lat" name="lng" type="text" value="<?php echo $lng; ?>"/>
+		<div id="location-selection-map"></div>
+		<label for="lat"><?php _e( 'Latitude', 'tipsfortrips' ); ?></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
+		<label for="lng"><?php _e( 'Longitude', 'tipsfortrips' ); ?></label><input id="lng" name="lng" type="text" value="<?php echo $lng; ?>"/>
 	<?php }
+
+	function save_meta_box_data( $id ) {
+		if( get_post_type() == 'post' ) {
+			if( isset( $_POST['lat'] ) ) {
+				update_post_meta( $id, 'lat', floatval( $_POST['lat'] ) );
+			}
+			if( isset( $_POST['lng'] ) ) {
+				update_post_meta( $id, 'lng', floatval( $_POST['lng'] ) );
+			}
+		}
+	}
 }
 
 global $theme;

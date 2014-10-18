@@ -8,21 +8,12 @@
 		console.log(countries);
 		
 		var countryTable = [];
-		//countryTable.pop();
 		countries.forEach(function(entry){	
 			countryTable.push([entry,1]);
 		});
 		console.log(countryTable);
 		data.addRows(countryTable);
-	    /*var data = google.visualization.arrayToDataTable(countriesTable/*[
-		['Country', 'Articles'],
-		['Russia', 3],
-		['France', 2],
-		['Spain', 4]
-	    ]);*/
 
-	    
-	    
 	    var options = {
 		dataMode: 'regions',
 		width: 395,
@@ -32,8 +23,6 @@
 
 	    var container = document.getElementById('travel-map');
 	    var chart = new google.visualization.GeoChart(container);
-		
-
 	    chart.draw(data, options);
 	}
 
@@ -43,9 +32,23 @@
 
 	$(document).ready(function() {
 		
-		
-		
-		
 		drawGeoMap();
+
+		var location = $('#location-selection-map');
+		if( location.length ) {
+			var lat = $('#lat');
+			var lng = $('#lng');
+			var latitude = lat.val() ? lat.val() : 0;
+			var longitude = lng.val() ? lng.val() : 0;
+			var dragend = function() {
+				var new_position = this.getPosition();
+				lat.val( new_position.lat() );
+				lng.val( new_position.lng() );
+			};
+
+			var map = new MapGenerator();
+			map.generateMap( 'location-selection-map', latitude, longitude, 3 );
+			map.setCenterMarker({ title: "", info: "", clickable: true, draggable: true, dragendHandler: dragend });
+		}
 	});
 })(jQuery);
