@@ -258,6 +258,8 @@ class Tips_for_Trip {
 	}
 
 	public function setup() {
+
+		add_action( 'pre_get_posts', array( $this, 'restrict_media_library' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scrips' ) );
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
@@ -314,6 +316,17 @@ class Tips_for_Trip {
 
 		</div>
 	<?php }
+
+	function restrict_media_library( $wp_query_obj ) {
+		global $current_user, $pagenow;
+		if( !is_a( $current_user, 'WP_User') )
+			return;
+		if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' )
+			return;
+		if( !current_user_can('manage_media_library') && current_user_can( 'traveler' ) )
+			$wp_query_obj->set('author', $current_user->ID );
+		return;
+	}
 }
 
 global $theme;
