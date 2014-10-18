@@ -14,4 +14,5 @@
 			<a href="<?php echo get_admin_url(); ?>"><?php _e( 'Dashboard' ,'tips4trip' ); ?></a>
 			<a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e( 'Log out' ,'tips4trip' ); ?></a>
 		</nav>
+		
 	</header>
