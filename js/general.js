@@ -32,7 +32,7 @@
 			var window_height = $(window).outerHeight();
 			var header_height = $('header').outerHeight();
 			var admin_bar_height = $('#wpadminbar').outerHeight();
-			$(this).height( window_height - header_height - 70);
+			$(this).height( window_height - header_height - admin_bar_height - 40);
 		});
 
 		if( $('#main-geo-map').length )
