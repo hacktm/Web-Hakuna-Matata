@@ -417,9 +417,14 @@ class Tips_for_Trip {
 		$lng = get_post_meta( $post->ID, 'lng', true );
 		?>
 		<div id="location-selection-map"></div>
-		<label for="lat"><?php _e( 'Latitude', 'tipsfortrips' ); ?></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
-		<label for="lng"><?php _e( 'Longitude', 'tipsfortrips' ); ?></label><input id="lng" name="lng" type="text" value="<?php echo $lng; ?>"/>
+        <div id="latitude">
+            <label for="lat"><?php _e( 'Latitude', 'tipsfortrips' ); ?></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
+        </div>
+        <div id="longitude">
+            <label for="lng"><?php _e( 'Longitude', 'tipsfortrips' ); ?></label><input id="lng" name="lng" type="text" value="<?php echo $lng; ?>"/>
+        </div>
 	<?php }
+
 
 	function save_meta_box_data( $id ) {
 		if( get_post_type() == 'post' ) {

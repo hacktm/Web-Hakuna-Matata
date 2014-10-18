@@ -55,3 +55,30 @@ a:hover {
 .view-switch a.current:before {
 	color: #060;
 }
+
+#latitude{
+    display: block;
+    margin: 5px auto;
+    width: 50%;
+    float: left;
+}
+#latitude label{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    line-height: 31px;
+    font-weight: bold;
+}
+#longitude{
+    display: block;
+    margin: 5px auto;
+    width: 50%;
+    overflow: hidden;
+}
+#longitude label{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    line-height: 31px;
+    font-weight: bold;
+}
