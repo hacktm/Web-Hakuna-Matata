@@ -263,10 +263,12 @@ class Tips_for_Trip {
         add_action( 'pre_get_posts', array( $this, 'restrict_media_library' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scrips' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scrips' ) );
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
 		add_action( 'admin_init', array( $this, 'manage_pages' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
 
+		add_action( 'add_meta_boxes', array( $this, 'manage_metaboxes' ) );
 		add_action( 'init', array( $this, 'setup_default_categories' ) );
 	}
 
@@ -281,7 +283,15 @@ class Tips_for_Trip {
 
 	public function admin_enqueue_scrips() {
 		wp_enqueue_script( 'google-geochart', 'https://www.google.com/jsapi', array(), $this->version, true );
-		wp_enqueue_script( 'admin-js', get_template_directory_uri() . '/js/admin.js', array( 'google-geochart' ), $this->version, true );
+		wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false', array(), $this->version, true );
+		wp_enqueue_script( 'admin-js', get_template_directory_uri() . '/js/admin.js', array( 'google-geochart', 'google-maps' ), $this->version, true );
+
+		wp_enqueue_style( 'admin-style', get_template_directory_uri() . '/css/admin.css', array(), $this->version );
+	}
+
+	public function login_enqueue_scrips() {
+		wp_enqueue_style( 'login-style', get_template_directory_uri() . '/css/login.css', array(), $this->version );
+
 	}
 
 	public function edit_capabilities() {
@@ -332,12 +342,33 @@ class Tips_for_Trip {
 	}
 
 	function setup_default_categories() {
+
+		unregister_taxonomy_for_object_type('post_tag', 'post');
+
 		foreach ( $this->countries as $code => $name ) {
 			if( ! term_exists( $name, 'category' ) ) {
 				wp_insert_term( $name, 'category', array( 'slug' => $code ) );
 			}
 		}
 	}
+
+	function manage_metaboxes() {
+		add_meta_box( 'location-selection',
+			__( 'Story location', 'tipsfortrips' ),
+			array($this, 'location_selection'),
+			'post',
+			'normal',
+			0 );
+	}
+
+	function location_selection( $id ) {
+		$lat = get_post_meta( $id, 'lat', true );
+		$lng = get_post_meta( $id, 'lng', true );
+		?>
+		<div id="location-selection"></div>
+		<label for="lat"></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
+		<label for="lng"></label><input id="lat" name="lng" type="text" value="<?php echo $lng; ?>"/>
+	<?php }
 }
 
 global $theme;
