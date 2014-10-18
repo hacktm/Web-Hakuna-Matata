@@ -372,7 +372,7 @@ class Tips_for_Trip {
 	}
 
 	public function user_travel_map_widget() { ?>
-		<div id="travel-map" data-countries='<?php echo json_encode( array( 'RU', 'US', 'RO' ) ); ?>'>
+		<div id="travel-map" data-countries='<?php echo json_encode( array( 'Russia', 'United States', 'Romania' ) ); ?>'>
 
 		</div>
 	<?php }

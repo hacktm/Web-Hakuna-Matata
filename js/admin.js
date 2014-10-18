@@ -21,7 +21,7 @@
 		dataMode: 'regions',
 		width: 395,
 		height: 395,
-		colorAxis: {colors: ['#eee', '#060']},
+		colorAxis: {colors: ['#eee', '#090']},
 		legend: 'none'
 	    };
 
