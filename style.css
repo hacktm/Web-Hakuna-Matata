@@ -47,3 +47,12 @@ header {
 	font-size: 16px;
 	text-decoration: none;
 }
+
+#main-geo-map {
+	width: 100%;
+	height: 600px;
+	padding: 20px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
