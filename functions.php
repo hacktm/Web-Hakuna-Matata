@@ -259,7 +259,9 @@ class Tips_for_Trip {
 
 	public function setup() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
-		add_action( 'admin_init', array( $this, '' ) );
+		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
+		add_action( 'admin_init', array( $this, 'manage_pages' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
 	}
 
 	public function enqueue_scrips() {
@@ -269,6 +271,40 @@ class Tips_for_Trip {
 		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery', 'google-geochart', 'google-maps' ), $this->version, true );
 
 		wp_enqueue_style( 'general-style', get_template_directory_uri() . '/style.css', array(), $this->version );
+	}
+
+	public function edit_capabilities() {
+		remove_role( 'traveler');
+		add_role( 'traveler', __( 'Traveler', 'tipsfortrips' ) , array(
+			'traveler' => true,
+			'read' => true,
+			'edit_post' => true,
+			'read_post' => true,
+			'delete_post' => true,
+			'edit_posts' => true,
+			'edit_published_posts' => true,
+			'publish_posts' => true,
+			'delete_posts' => true,
+			'delete_published' => true,
+			'edit_others_posts' => false,
+			'moderate_comments' => false,
+			'upload_files' => true
+		));
+	}
+
+	public function manage_pages() {
+		if( current_user_can( 'traveler' ) ) {
+			remove_menu_page( 'edit-comments.php' );
+			remove_menu_page( 'tools.php' );
+		}
+	}
+
+	public function manage_dashboard_widgets() {
+		wp_add_dashboard_widget( 'traveler_map', __( 'Where I traveled', 'tipsfortrips' ) , array( $this, 'user_travel_map_widget' ) );
+	}
+
+	public function user_travel_map_widget() {
+		echo "<p>Put user map here</p>";
 	}
 }
 
