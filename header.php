@@ -17,4 +17,5 @@
 				<a href="<?php echo wp_logout_url( home_url() ); ?>"><?php _e( 'Log out' ,'tips4trip' ); ?></a>
 			<?php } ?>
 		</nav>
+		
 	</header>

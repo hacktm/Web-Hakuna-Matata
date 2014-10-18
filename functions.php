@@ -266,7 +266,7 @@ class Tips_for_Trip {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'google-geochart', 'https://www.google.com/jsapi', array(), $this->version, true );
 		wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false', array(), $this->version, true );
-		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery', 'google-geochart', 'google-maps' ), $this->version, true );
 
 		wp_enqueue_style( 'general-style', get_template_directory_uri() . '/style.css', array(), $this->version );
 	}
