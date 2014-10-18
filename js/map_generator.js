@@ -81,7 +81,6 @@ function MapGenerator() {
 					} );
 					this.info.open( this.map, this);
 					this.open = true;
-					FB.XFBML.parse(document.getElementById('restaurants-map'));
 				} else {
 					this.info.close( this.map, this);
 					this.open = false;

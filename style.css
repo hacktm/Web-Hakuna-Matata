@@ -212,3 +212,7 @@ blockquote{
     border-left: solid;
     border-left-color: #060;
 }
+
+.articles.hidden {
+	display: none;
+}

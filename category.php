@@ -4,8 +4,8 @@
 ?>
 <?php
 global $theme;
-if( isset( $_GET['author'] ) )
-	$user = get_user_by( 'login', $_GET['author' ] );
+if( isset( $_GET['traveler'] ) )
+	$user = get_user_by( 'login', $_GET['traveler' ] );
 else
 	$user = false;
 if ( $user ) { ?>
@@ -31,7 +31,23 @@ if ( $user ) { ?>
 <?php } ?>
 
 <?php $category = strtoupper( get_query_var( 'category_name' ) ); ?>
-<div id="country-map" class="full-height" data-country='<?php echo json_encode( $country_bounds[$category] ); ?>'>
+<div id="country-map" class="full-height" data-country='<?php echo json_encode( $country_bounds[$category] ); ?>' <?php echo $user ? "data='" . $user->ID . "'" : '';; ?>>
+</div>
+<div class="articles">
+	<?php while ( have_posts() ) { the_post() ?>
+		<?php
+			$pos = array(
+				'lat' => get_post_meta( get_the_ID(), 'lat', true ),
+				'lng' => get_post_meta( get_the_ID(), 'lng', true )
+			);
+		?>
+		<article id="post-<?php echo get_the_ID(); ?>" data-position='<?php echo json_encode( $pos ); ?>'>
+			<h2 class="title"><?php the_title(); ?></h2>
+			<div class="excerpt"><?php the_excerpt(); ?></div>
+			<a class="link" href="<?php the_permalink(); ?>"><?php _e( 'Read more', 'tipsfortrips' ); ?></a>
+		</article>
+	<?php } ?>
+
 </div>
 
 <?php get_footer(); ?>

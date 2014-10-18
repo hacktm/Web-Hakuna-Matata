@@ -90,7 +90,62 @@ window.fbAsyncInit = function() {
 			var zoom = map.calculateCountryZoom( parseFloat( data['ne_lat'] ), parseFloat(data['ne_lng']),parseFloat(data['sw_lat']),parseFloat(data['sw_lng']), country_map );
 
 			map.generateMap('country-map', data['center_lat'], data['center_lng'], zoom );
+
+
+			var articles = $('.articles article');
+			if( articles.length ) {
+				var index = 0;
+				articles.each(function () {
+					var position = $(this).data('position');
+					var title = $('.title', this).text();
+					map.setExtraMarker(index++, position['lat'], position['lng'], {
+						info: $(this).html(),
+						title: title,
+						clickable: true
+					});
+					$(this).remove();
+				});
+
+				function get_posts_cluster(page) {
+
+					var post = {
+						action: 'get_posts_in',
+						ne_lat: bounds.getNorthEast().lat(),
+						ne_lng: bounds.getNorthEast().lng(),
+						sw_lat: bounds.getSouthWest().lat(),
+						sw_lng: bounds.getSouthWest().lng(),
+						page: page
+					};
+
+					$.ajax({
+						url: ajax.ajaxurl,
+						type: "post",
+						data: post,
+						dataType: "json",
+						success: function(response){
+							response.forEach(function(post) {
+								map.setExtraMarker(index++, post['lat'], post['lng'], {
+									info: post['info'],
+									title: post['title'],
+									clickable: true
+								});
+							});
+							if( response.length )
+								get_posts_cluster(page+1);
+						}
+					});
+				}
+
+				var bounds;
+				google.maps.event.addListener(map.map, "bounds_changed", function() {
+					// send the new bounds back to your server
+					bounds = map.map.getBounds();
+					get_posts_cluster(1);
+				});
+			}
 		}
+
+
 	});
 })(jQuery);
 

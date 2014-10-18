@@ -273,6 +273,7 @@ class Tips_for_Trip {
         add_image_size( 'single-image', 9999, 600, true);
 
         add_action( 'pre_get_posts', array( $this, 'restrict_media_library' ) );
+		add_action( 'parse_query', array( $this, 'modify_category_query' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scrips' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scrips' ) );
@@ -290,6 +291,9 @@ class Tips_for_Trip {
 		add_action( 'admin_footer-profile.php', array( $this, 'profile_subject_end' ) );
 		add_filter( 'user_contactmethods', array( $this, 'modify_contact_methods' ) );
 
+		add_action( 'wp_ajax_get_posts_in', array( $this, 'get_posts_in' ) );
+		add_action( 'wp_ajax_nopriv_get_posts_in', array( $this, 'get_posts_in' ) );
+
 		remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
 	}
 
@@ -299,6 +303,9 @@ class Tips_for_Trip {
 		wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false', array(), $this->version, true );
 		wp_enqueue_script( 'map-generator', get_template_directory_uri() . '/js/map_generator.js', array( 'google-maps' ), $this->version, true );
 		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery', 'google-geochart', 'google-maps' ), $this->version, true );
+
+		wp_localize_script( 'general', 'ajax', array( 'ajaxurl' => admin_url('admin-ajax.php' ) ) );
+
 
 		wp_enqueue_style( 'general-style', get_template_directory_uri() . '/style.css', array(), $this->version );
 	}
@@ -411,6 +418,7 @@ class Tips_for_Trip {
 
 	function restrict_media_library( $wp_query_obj ) {
 		global $current_user, $pagenow;
+
 		if( !is_a( $current_user, 'WP_User') )
 			return;
 		if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' )
@@ -418,6 +426,12 @@ class Tips_for_Trip {
 		if( !current_user_can('manage_media_library') && current_user_can( 'traveler' ) )
 			$wp_query_obj->set('author', $current_user->ID );
 		return;
+	}
+
+	function modify_category_query( $query ) {
+		if( $query->is_main_query() && $query->is_category() ) {
+			$query->set( 'posts_per_page', '-1' );
+		}
 	}
 
 	function setup_default_categories() {
@@ -463,6 +477,54 @@ class Tips_for_Trip {
 				update_post_meta( $id, 'lng', floatval( $_POST['lng'] ) );
 			}
 		}
+	}
+
+	function get_posts_in() {
+
+		if( floatval( $_POST['sw_lng'] ) < floatval( $_POST['ne_lng'] ) )
+			$lngs = array( floatval( $_POST['sw_lng'] ), floatval( $_POST['ne_lng'] ) );
+		else
+			$lngs = array( floatval( $_POST['sw_lng'] ), floatval( $_POST['sw_lng'] ) );
+
+		$args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 10,
+			'paged' => intval( $_POST['page'] ),
+			'meta_query' => array(
+				array(
+					'key' => 'lat',
+					'value' => array( floatval( $_POST['sw_lat'] ), floatval( $_POST['ne_lat'] ) ),
+					'type' => 'numeric',
+					'compare' => 'BETWEEN'
+				),
+				array(
+					'key' => 'lng',
+					'value' => $lngs,
+					'type' => 'numeric',
+					'compare' => floatval( $_POST['sw_lng'] ) < floatval( $_POST['ne_lng'] ) ? 'BETWEEN' : 'NOT BETWEEN'
+				)
+			)
+		);
+
+		if( $_POST['author'] )
+			$args['author'] = intval( $_POST['author']);
+
+		$posts = new WP_Query($args);
+
+		$push_posts =  array();
+		while( $posts->have_posts() ) { $posts->the_post();
+			$info = '<h2 class="title">' . get_the_title() . '</h2>';
+			$info.= '<div class="excerpt">' . get_the_excerpt() . '</div>';
+			$info.= '<a href="' . get_the_permalink() . '">' . __( 'Read more', 'tipsfortrips' ) . '</a>';
+			$push_posts[] = array(
+				'title' => get_the_title(),
+				'info' => $info,
+				'lat' => get_post_meta( get_the_ID(), 'lat', true ),
+				'lng' => get_post_meta( get_the_ID(), 'lng', true )
+			);
+		}
+		echo json_encode( $push_posts );
+		exit();
 	}
 }
 
