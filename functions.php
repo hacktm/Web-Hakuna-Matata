@@ -259,6 +259,7 @@ class Tips_for_Trip {
 
 	public function setup() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scrips' ) );
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
 		add_action( 'admin_init', array( $this, 'manage_pages' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
@@ -271,6 +272,11 @@ class Tips_for_Trip {
 		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery', 'google-geochart', 'google-maps' ), $this->version, true );
 
 		wp_enqueue_style( 'general-style', get_template_directory_uri() . '/style.css', array(), $this->version );
+	}
+
+	public function admin_enqueue_scrips() {
+		wp_enqueue_script( 'google-geochart', 'https://www.google.com/jsapi', array(), $this->version, true );
+		wp_enqueue_script( 'admin-js', get_template_directory_uri() . '/js/admin.js', array( 'google-geochart' ), $this->version, true );
 	}
 
 	public function edit_capabilities() {
@@ -303,9 +309,11 @@ class Tips_for_Trip {
 		wp_add_dashboard_widget( 'traveler_map', __( 'Where I traveled', 'tipsfortrips' ) , array( $this, 'user_travel_map_widget' ) );
 	}
 
-	public function user_travel_map_widget() {
-		echo "<p>Put user map here</p>";
-	}
+	public function user_travel_map_widget() { ?>
+		<div id="travel-map" data-countries='<?php echo json_encode( array( 'RU', 'US', 'RO' ) ); ?>'>
+
+		</div>
+	<?php }
 }
 
 global $theme;
