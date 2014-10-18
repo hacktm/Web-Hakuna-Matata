@@ -216,3 +216,12 @@ blockquote{
 .articles.hidden {
 	display: none;
 }
+#main-geo-map path {
+stroke-width:1; /* control the countries borders width */
+stroke:#999999; /* choose a color for the border */
+}
+
+#main-geo-map path:hover {
+stroke-width:1; /* control the countries borders width */
+stroke:#777; /* choose a color for the border */
+}
