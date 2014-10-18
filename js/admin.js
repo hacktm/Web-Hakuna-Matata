@@ -4,7 +4,8 @@
 		
 		data.addColumn('string', 'Countries');
 		data.addColumn('number', 'Visited');
-		data.addColumn({type:'string', role: 'tooltip'});
+		//data.addColumn('tooltip', {role: 'tooltip', p:{html:true}} );
+		data.addColumn({type: 'string', role: 'tooltip'});
 		var countries = $('#travel-map').data('countries');
 		console.log(countries);
 		
@@ -15,7 +16,7 @@
 		console.log(countryTable);
 		data.addRows(countryTable);
 
-		//var data = google.visualization.arrayToDataTable(countryTable);
+		//var data2 = google.visualization.arrayToDataTable(countryTable);
 
 	    var options = {
 		dataMode: 'regions',

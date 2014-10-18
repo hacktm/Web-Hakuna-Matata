@@ -5,6 +5,18 @@ class Tips_for_Trip {
 	private $version = 1.0;
 	private $textdomain = 'tipsfortrips';
 
+	public $social_networks = array( 
+		'facebook' => 'Facebook', 
+		'twitter' => 'Twitter', 
+		'gplus' => 'Google Plus', 
+		'pinterest' => 'Pinterest', 
+		'vimeo' => 'Vimeo', 
+		'youtube-play' => 'YouTube', 
+		'flickr' => 'Flickr', 
+		'tumblr' => 'Tumblr', 
+		'instagram' => 'Instagram', 
+		'stumbleupon' => 'Stumble Upon', 
+		'picasa' => 'Picasa' );
 	private $countries = array(	
 		'AF' => 'Afghanistan',
 		'AX' => 'Aland Islands',
@@ -269,6 +281,7 @@ class Tips_for_Trip {
 		add_action( 'admin_menu', array( $this, 'deactivate_dashboard_widgets' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
 		add_action( 'save_post', array( $this, 'save_meta_box_data' ) );
+		add_filter('show_admin_bar', '__return_true');
 
 		add_action( 'add_meta_boxes', array( $this, 'manage_metaboxes' ) );
 		add_action( 'init', array( $this, 'setup_default_categories' ) );
@@ -276,6 +289,7 @@ class Tips_for_Trip {
 		add_action( 'admin_bar_menu', array( $this, 'remove_nodes'), 999 );
 		add_action( 'admin_head-profile.php', array( $this, 'profile_subject_start' ) );
 		add_action( 'admin_footer-profile.php', array( $this, 'profile_subject_end' ) );
+		add_filter( 'user_contactmethods', array( $this, 'modify_contact_methods' ) );
 
 		remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
 	}
@@ -306,6 +320,14 @@ class Tips_for_Trip {
 
 	public function login_logo_url() {
 		return home_url();
+	}
+
+	public function modify_contact_methods( $profile_fields ) {
+		foreach( $this->social_networks as $key => $value ) {
+			$profile_fields[ $key ] = $value;
+		}
+
+		return $profile_fields;
 	}
 
 	public function remove_personal_options( $subject ) {
@@ -372,13 +394,20 @@ class Tips_for_Trip {
 	}
 
 	public function user_travel_map_widget() { ?>
-		<div id="travel-map" data-countries='<?php echo json_encode( array( 'RU', 'US', 'RO' ) ); ?>'>
+		<div id="travel-map" data-countries='<?php echo json_encode( array( 'Russia', 'United States', 'Romania' ) ); ?>'>
 
 		</div>
 	<?php }
 
-	public function user_overview() {
-		echo 'overview';
+	public function user_overview() { ?>
+        <!--published travel stories-->
+        <p>Number of stories I published: <strong>46</strong></p>
+        <!--total visited countries-->
+        <p>Total no. of visited countries:</p>
+        <progress title="46/193" value="46" max="193"></progress>
+        <!--last visited country-->
+        <p>Last visited country: <strong>Romania</strong></p>
+        <?php
 	}
 
 	function restrict_media_library( $wp_query_obj ) {
@@ -417,9 +446,14 @@ class Tips_for_Trip {
 		$lng = get_post_meta( $post->ID, 'lng', true );
 		?>
 		<div id="location-selection-map"></div>
-		<label for="lat"><?php _e( 'Latitude', 'tipsfortrips' ); ?></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
-		<label for="lng"><?php _e( 'Longitude', 'tipsfortrips' ); ?></label><input id="lng" name="lng" type="text" value="<?php echo $lng; ?>"/>
+        <div id="latitude">
+            <label for="lat"><?php _e( 'Latitude', 'tipsfortrips' ); ?></label><input id="lat" name="lat" type="text" value="<?php echo $lat; ?>"/>
+        </div>
+        <div id="longitude">
+            <label for="lng"><?php _e( 'Longitude', 'tipsfortrips' ); ?></label><input id="lng" name="lng" type="text" value="<?php echo $lng; ?>"/>
+        </div>
 	<?php }
+
 
 	function save_meta_box_data( $id ) {
 		if( get_post_type() == 'post' ) {
