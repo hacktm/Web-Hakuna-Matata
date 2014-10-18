@@ -82,3 +82,20 @@ a:hover {
     line-height: 31px;
     font-weight: bold;
 }
+
+progress{
+    background: #cfcfcf;
+    color: #060;
+    height: 23px;
+    width: 100%;
+}
+
+progress::-webkit-progress-bar {
+    background: #cfcfcf;
+}
+progress::-moz-progress-bar {
+    background: #cfcfcf;
+}
+progress::-o-progress-bar {
+    background: #cfcfcf;
+}

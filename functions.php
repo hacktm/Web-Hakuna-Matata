@@ -377,8 +377,15 @@ class Tips_for_Trip {
 		</div>
 	<?php }
 
-	public function user_overview() {
-		echo 'overview';
+	public function user_overview() { ?>
+        <!--published travel stories-->
+        <p>Number of stories I published: <strong>46</strong></p>
+        <!--total visited countries-->
+        <p>Total no. of visited countries:</p>
+        <progress title="46/193" value="46" max="193"></progress>
+        <!--last visited country-->
+        <p>Last visited country: <strong>Romania</strong></p>
+        <?php
 	}
 
 	function restrict_media_library( $wp_query_obj ) {
