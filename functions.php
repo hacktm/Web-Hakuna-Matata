@@ -266,6 +266,7 @@ class Tips_for_Trip {
 		add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scrips' ) );
 		add_action( 'admin_init', array( $this, 'edit_capabilities' ) );
 		add_action( 'admin_init', array( $this, 'manage_pages' ) );
+		add_action( 'admin_menu', array( $this, 'deactivate_dashboard_widgets' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
 		add_action( 'save_post', array( $this, 'save_meta_box_data' ) );
 
@@ -325,6 +326,21 @@ class Tips_for_Trip {
 
 	public function manage_dashboard_widgets() {
 		wp_add_dashboard_widget( 'traveler_map', __( 'Where I traveled', 'tipsfortrips' ) , array( $this, 'user_travel_map_widget' ) );
+		wp_add_dashboard_widget( 'overview', __( 'Overview', 'tipsfortrips' ), array( $this, 'user_overview' ) );
+	}
+
+	public function deactivate_dashboard_widgets() {
+		if( current_user_can( 'traveler' ) ) {
+			remove_meta_box( 'dashboard_right_now', 'dashboard', 'core' );
+			remove_meta_box( 'dashboard_activity', 'dashboard', 'core' );
+			remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'core' );
+			remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'core' );
+			remove_meta_box( 'dashboard_plugins', 'dashboard', 'core' );
+
+			remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'core' );
+			remove_meta_box( 'dashboard_primary', 'dashboard', 'core' );
+			remove_meta_box( 'dashboard_secondary', 'dashboard', 'core' );
+		}
 	}
 
 	public function user_travel_map_widget() { ?>
@@ -332,6 +348,10 @@ class Tips_for_Trip {
 
 		</div>
 	<?php }
+
+	public function user_overview() {
+		echo 'overview';
+	}
 
 	function restrict_media_library( $wp_query_obj ) {
 		global $current_user, $pagenow;
