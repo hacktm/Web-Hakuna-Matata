@@ -281,7 +281,6 @@ class Tips_for_Trip {
 		add_action( 'admin_menu', array( $this, 'deactivate_dashboard_widgets' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'manage_dashboard_widgets' ) );
 		add_action( 'save_post', array( $this, 'save_meta_box_data' ) );
-		add_filter('show_admin_bar', '__return_true');
 
 		add_action( 'add_meta_boxes', array( $this, 'manage_metaboxes' ) );
 		add_action( 'init', array( $this, 'setup_default_categories' ) );
