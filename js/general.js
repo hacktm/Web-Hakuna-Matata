@@ -37,6 +37,15 @@
 
 		if( $('#main-geo-map').length )
 			drawGeoMap();
+
+		var country_map = $('#country-map');
+		if( country_map.length ) {
+			var map = new MapGenerator();
+			var data = country_map.data('country');
+			var zoom = map.calculateCountryZoom( parseFloat( data['ne_lat'] ), parseFloat(data['ne_lng']),parseFloat(data['sw_lat']),parseFloat(data['sw_lng']), country_map );
+
+			map.generateMap('country-map', data['center_lat'], data['center_lng'], zoom );
+		}
 	});
 })(jQuery);
 
