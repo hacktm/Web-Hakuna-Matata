@@ -16,7 +16,7 @@ if ( $user ) { ?>
 				$name = ucfirst( get_the_author_meta( 'user_login' , $user->ID ) ); 
 		?>
 		<h1>Hi. I'm <?php echo $name; ?>!</h1>
-		<h3>My social life</h3>
+		<h3>Where you can find me</h3>
 
 		<p class="social-icons">
 			<?php 

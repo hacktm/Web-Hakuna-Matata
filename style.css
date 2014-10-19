@@ -171,6 +171,11 @@ header {
 	box-sizing: border-box;
 }
 
+#main-geo-map.has-sidebar {
+	width: 80%;
+	float: left;
+}
+
 /** Map pointers **/
 
 

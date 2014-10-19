@@ -295,6 +295,7 @@ class Tips_for_Trip {
 
 		add_action( 'wp_ajax_get_posts_in', array( $this, 'get_posts_in' ) );
 		add_action( 'wp_ajax_nopriv_get_posts_in', array( $this, 'get_posts_in' ) );
+		add_action( 'init', array( $this, 'change_author_permalinks' ) );
 
 		remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
 		if(!is_admin())
@@ -330,6 +331,12 @@ class Tips_for_Trip {
 
 	public function login_logo_url() {
 		return home_url();
+	}
+
+	public function change_author_permalinks() {
+    		global $wp_rewrite;
+    		$wp_rewrite->author_base = 'traveler';
+    		$wp_rewrite->author_structure = '/' . $wp_rewrite->author_base. '/%author%';
 	}
 
 	public function modify_contact_methods( $profile_fields ) {
