@@ -481,6 +481,9 @@ class Tips_for_Trip {
 				}
 			}
 		}
+		if( $query->is_main_query() && $query->is_author() ) {
+			$query->set( 'posts_per_page', '-1' );
+		}
 	}
 
 	function setup_default_categories() {
