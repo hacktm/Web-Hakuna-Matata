@@ -8,33 +8,11 @@ if( isset( $_GET['traveler'] ) )
 	$user = get_user_by( 'login', $_GET['traveler' ] );
 else
 	$user = false;
-if ( $user ) { ?>
-	<div id="user-info" class="full-height">
-		<?php
-			$name = get_the_author_meta( 'first_name' , $user->ID ); 
-			if( $name == '' )
-				$name = ucfirst( get_the_author_meta( 'user_login' , $user->ID ) ); 
-		?>
-		<h1>Hi. I'm <?php echo $name; ?>!</h1>
-		<h3>Where you can find me</h3>
-
-		<p class="social-icons">
-			<?php 
-				foreach( $theme->social_networks as $network => $name ): 
-					$link = get_the_author_meta( $network, $user->ID );
-					if( $link != '' ):
-			?>
-				<a href="<?php echo $link; ?>" target="_blank" class="icon-<?php echo $network; ?>"></a>
-			<?php 
-					endif;
-				endforeach;
-			?>
-			<a href="<?php echo get_the_author_meta( 'url', $user->ID ); ?>" target="_blank" class="icon-link"></a>
-		</p>
-		<h3>About me</h3>
-		<p class="description"><?php echo get_the_author_meta( 'description', $user->ID ); ?></p>
-	</div>
-<?php } ?>
+if ( $user ) {
+	global $usr;
+	$usr = $user;
+	get_template_part('inc/userinfo');
+} ?>
 
 <?php $category = strtoupper( get_query_var( 'category_name' ) ); ?>
 <div id="country-map" class="full-height <?php if( $user ) echo 'has-sidebar'; ?>" data-country='<?php echo json_encode( $country_bounds[$category] ); ?>' <?php echo $user ? "data='" . $user->ID . "'" : '';; ?>>

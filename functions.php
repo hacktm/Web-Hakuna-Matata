@@ -11,12 +11,67 @@ class Tips_for_Trip {
 		'gplus' => 'Google Plus', 
 		'pinterest' => 'Pinterest', 
 		'vimeo' => 'Vimeo', 
-		'youtube-play' => 'YouTube', 
+		'youtube' => 'YouTube', 
 		'flickr' => 'Flickr', 
 		'tumblr' => 'Tumblr', 
 		'instagram' => 'Instagram', 
 		'stumbleupon' => 'Stumble Upon', 
-		'picasa' => 'Picasa' );
+		'picasa' => 'Picasa' 
+	);
+	public $badges = array(
+		'countries' => array(
+			1 => array(
+				'title' => 'Rookie Tourist',
+				'description' => 'You get this badge after visiting one country.'
+			),
+			10 => array(
+				'title' => 'Adventurous Tourist',
+				'description' => 'You get this badge after visiting ten countries.'
+			),
+			25 => array(
+				'title' => 'Courageous Tourist',
+				'description' => 'You get this badge after visiting twentyi-five countries.'
+			),
+			50 => array(
+				'title' => 'Resilient Tourist',
+				'description' => 'You get this badge after visiting fifty countries.'
+			),
+			100 => array(
+				'title' => 'Unstopable Tourist',
+				'description' => 'You get this badge after visiting one hundred countries.'
+			),
+			196 => array(
+				'title' => 'Crazy Tourist',
+				'description' => 'You get this badge after visiting all the countries.'
+			)
+		),
+		'posts' => array(
+			1 => array(
+				'title' => 'Amateur Blogger',
+				'description' => 'You get this badge after writing one article.'
+			),
+			5 => array(
+				'title' => 'Useful Blogger',
+				'description' => 'You get this badge after writing five articles.'
+			),
+			10 => array(
+				'title' => 'Inspiring Blogger',
+				'description' => 'You get this badge after writing ten articles.'
+			),
+			25 => array(
+				'title' => 'Great Blogger',
+				'description' => 'You get this badge after writing twentyi-five articles.'
+			),
+			50 => array(
+				'title' => 'Excellent Blogger',
+				'description' => 'You get this badge after writing fifty articles.'
+			),
+			100 => array(
+				'title' => 'Kick-ass Blogger',
+				'description' => 'You get this badge after writing one hundred articles.'
+			)
+		)
+	);
 	private $countries = array(	
 		'AF' => 'Afghanistan',
 		'AX' => 'Aland Islands',
@@ -313,7 +368,6 @@ class Tips_for_Trip {
 		wp_enqueue_script( 'general', get_template_directory_uri() . '/js/general.js', array( 'jquery', 'google-geochart', 'google-maps' ), $this->version, true );
 
 		wp_localize_script( 'general', 'ajax', array( 'ajaxurl' => admin_url('admin-ajax.php' ) ) );
-
 
 		wp_enqueue_style( 'general-style', get_template_directory_uri() . '/style.css', array(), $this->version );
 	}

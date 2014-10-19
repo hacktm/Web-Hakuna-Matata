@@ -30,6 +30,27 @@ Text Domain: tipsfortrips
 }
 */
  
+@font-face {
+  font-family: 'fontello';
+  src: url('fonts/fontello.eot?63676251');
+  src: url('fonts/fontello.eot?63676251#iefix') format('embedded-opentype'),
+       url('fonts/fontello.woff?63676251') format('woff'),
+       url('fonts/fontello.ttf?63676251') format('truetype'),
+       url('fonts/fontello.svg?63676251#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?63676251#fontello') format('svg');
+  }
+}
+*/
+ 
  [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "fontello";
   font-style: normal;
@@ -61,18 +82,44 @@ Text Domain: tipsfortrips
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.icon-flickr:before { content: '\e800'; } /* '' */
-.icon-vimeo:before { content: '\e801'; } /* '' */
-.icon-twitter:before { content: '\e802'; } /* '' */
-.icon-facebook:before { content: '\e803'; } /* '' */
-.icon-gplus:before { content: '\e804'; } /* '' */
-.icon-pinterest:before { content: '\e805'; } /* '' */
-.icon-tumblr:before { content: '\e806'; } /* '' */
-.icon-stumbleupon:before { content: '\e807'; } /* '' */
-.icon-instagram:before { content: '\e808'; } /* '' */
-.icon-picasa:before { content: '\e809'; } /* '' */
-.icon-link:before { content: '\e80a'; } /* '' */
-.icon-youtube-play:before { content: '\e80b'; } /* '' */
+.icon-child:before { content: '\e800'; } /* '' */
+.icon-globe-alt-outline:before { content: '\e801'; } /* '' */
+.icon-globe-alt:before { content: '\e802'; } /* '' */
+.icon-airport:before { content: '\e803'; } /* '' */
+.icon-globe:before { content: '\e804'; } /* '' */
+.icon-bus:before { content: '\e805'; } /* '' */
+.icon-belowground-rail:before { content: '\e806'; } /* '' */
+.icon-bicycle:before { content: '\e807'; } /* '' */
+.icon-youtube:before { content: '\e808'; } /* '' */
+.icon-vimeo:before { content: '\e809'; } /* '' */
+.icon-facebook:before { content: '\e80a'; } /* '' */
+.icon-gplus:before { content: '\e80b'; } /* '' */
+.icon-twitter:before { content: '\e80c'; } /* '' */
+.icon-pinterest:before { content: '\e80d'; } /* '' */
+.icon-link:before { content: '\e80e'; } /* '' */
+.icon-flickr:before { content: '\e80f'; } /* '' */
+.icon-tumblr:before { content: '\e810'; } /* '' */
+.icon-instagram:before { content: '\e811'; } /* '' */
+.icon-stumbleupon:before { content: '\e812'; } /* '' */
+.icon-picasa:before { content: '\e813'; } /* '' */
+.icon-vector-pencil:before { content: '\e814'; } /* '' */
+.icon-pencil-alt:before { content: '\e815'; } /* '' */
+.icon-pencil:before { content: '\e816'; } /* '' */
+.icon-feather:before { content: '\e817'; } /* '' */
+.icon-pencil-alt-1:before { content: '\e818'; } /* '' */
+.icon-pen:before { content: '\e819'; } /* '' */
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix {
+    display: inline-block;
+}
 
 html {
 	margin: 50px 0 0 0;
@@ -216,8 +263,58 @@ header {
 	float: left;
 }
 
-/** Map pointers **/
+/** Badges **/
+.badge {
+	float: left;
+	width: 80px;
+	height: 80px;
+	border: 3px solid #ccc;
+	border-radius: 50%;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	position: relative;
+	cursor: help;
+}
 
+.badge div {
+	position: absolute;
+	width: 200px;
+	height: 50px;
+	background-color: rgba(0,0,0,0.8);
+	padding: 5px;
+	z-index: 99;
+	top: 0;
+	right: -220px;
+	top: 10px;
+	display: none;
+}
+.badge:hover div {
+	display: block;
+}
+.badge h4 {
+	font-size: 14px;
+	margin: 0;
+	line-height: 14px;
+	color: #eee;
+	font-family: 'Ubuntu', sans-serif;
+}
+.badge p {
+	font-size: 12px;
+	color: #eee;
+	font-family: 'Roboto', sans-serif;
+	line-height: 16px;
+	margin: 5px 0 0 0;
+}
+
+.country-badges .badge:before,
+.post-badges .badge:before {
+	width: 80px;
+	line-height: 80px;
+	margin-left: 0;
+	font-size: 32px;
+	color: #ccc;
+	cursor: help;
+}
 
 /** Map pointers **/
 .gm-style-iw h2 {
