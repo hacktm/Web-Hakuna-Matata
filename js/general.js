@@ -66,6 +66,8 @@ window.fbAsyncInit = function() {
 		});
 
 		chart.draw(data, options);
+
+		$('#main-geo-map > div').eq(0).css('position','fixed');
 	}
 
 	function drawGeoMap() {
@@ -79,9 +81,9 @@ window.fbAsyncInit = function() {
 			var header_height = $('header').outerHeight();
 			var admin_bar_height = $('#wpadminbar').outerHeight();
 			if( $(this).attr('id') == 'user-info' )
-				$(this).height( window_height - header_height - admin_bar_height - 40 );
+				$(this).css( 'min-height', window_height - header_height - admin_bar_height - 40 + 'px');
 			else
-				$(this).height( window_height - header_height - admin_bar_height );
+				$(this).css( 'min-height',  window_height - header_height - admin_bar_height + 'px' );
 
 		});
 
