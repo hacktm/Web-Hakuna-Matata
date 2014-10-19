@@ -7,9 +7,11 @@
 		//data.addColumn('tooltip', {role: 'tooltip', p:{html:true}} );
 		data.addColumn({type: 'string', role: 'tooltip'});
 		var countries = $('#travel-map').data('countries');
-		console.log(countries);
 		
 		var countryTable = [];
+		if( ! countries )
+			return;
+
 		countries.forEach(function(entry){	
 			countryTable.push([entry,1, 'Visited']);
 		});

@@ -328,7 +328,7 @@ class Tips_for_Trip {
         add_image_size( 'single-image', 9999, 500, true);
 		
 		add_theme_support( 'post-thumbnails' );
-		
+
         add_action( 'pre_get_posts', array( $this, 'restrict_media_library' ) );
 		add_action( 'parse_query', array( $this, 'modify_category_query' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scrips' ) );
@@ -485,8 +485,10 @@ class Tips_for_Trip {
 
 	public function manage_pages() {
 		if( current_user_can( 'traveler' ) ) {
-			remove_menu_page( 'edit-comments.php' );
-			remove_menu_page( 'tools.php' );
+			if( isset( $GLOBALS['admin_page_hooks']['edit-comments.php']) )
+				remove_menu_page( 'edit-comments.php' );
+			if( isset( $GLOBALS['admin_page_hooks']['tools.php']) )
+				remove_menu_page( 'tools.php' );
 		}
 	}
 
@@ -625,7 +627,6 @@ class Tips_for_Trip {
 		$args = array(
 			'post_type' => 'post',
 			'posts_per_page' => 10,
-			'paged' => intval( $_POST['page'] ),
 			'meta_query' => array(
 				array(
 					'key' => 'lat',
@@ -643,13 +644,13 @@ class Tips_for_Trip {
 		);
 
 		$response = array();
-		if( $_POST['author'] )
+		if( isset( $_POST['author'] ) )
 			$args['author'] = intval( $_POST['author']);
 
 
 		$exclude = array();
 
-		if( $_POST['session_key'] ) {
+		if( isset ( $_POST['session_key'] ) ) {
 			$exclude = get_transient( $_POST['session_key'] );
 			if( $exclude )
 				$args['post__not_in'] = $exclude;
@@ -658,7 +659,7 @@ class Tips_for_Trip {
 			$response['session_key'] = $_POST['session_key'];
 
 		}
-		if( ! $response['session_key'] ) {
+		if( ! isset( $response['session_key'] ) ) {
 			$response['session_key'] = md5( $args . strtotime( 'now' ) . $_SERVER['REMOTE_ADDR'] . rand() );
 		}
 
