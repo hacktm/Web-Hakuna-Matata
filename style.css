@@ -324,6 +324,9 @@ header {
 }
 
 /** Map pointers **/
+.gm-style-iw div {
+	overflow: visible !important;
+}
 .gm-style-iw h2 {
 	width: 300px;
 	font-size: 16px;
@@ -337,7 +340,7 @@ header {
 	background-color: #060;
 	color: #fff;
 	border-radius: 3px;
-	display: inline-block;
+	display: block;
 	float: left;
 	text-decoration: none;
 	font-weight: bold;
@@ -430,6 +433,16 @@ blockquote{
 	height: auto;
 }
 
+@media all and (max-width: 1280px) {
+	#user-info {
+		width: 30%;
+	}
+	.category #country-map.has-sidebar,
+	#main-geo-map.has-sidebar {
+		width: 70%;
+	}
+}
+
 @media all and (max-width: 1110px) {
 	.single .container {
 		background-color: transparent;
@@ -449,6 +462,17 @@ blockquote{
 @media all and (max-width: 640px) {
 	.featured-image {
 		height: 150px;
+	}
+	#user-info {
+		width: 100%;
+	}
+	.category #country-map.has-sidebar,
+	#main-geo-map.has-sidebar {
+		width: 100%;
+	}
+	.category #country-map.has-sidebar,
+	#main-geo-map.has-sidebar > div:first-child {
+		position: relative !important;
 	}
 }
 
