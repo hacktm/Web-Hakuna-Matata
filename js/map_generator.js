@@ -10,6 +10,7 @@ if (typeof(Number.prototype.toDeg) === "undefined") {
 	}
 }
 
+
 function MapGenerator() {
 	this.geolocationOptions = {
 		enableHighAccuracy: true,
@@ -46,6 +47,7 @@ function MapGenerator() {
 	this.setMarker = function( lat, lng, options ) {
 		var markerOptions = {
 			position: new google.maps.LatLng(lat, lng),
+			icon: 'http://' + document.domain + '/wp-content/themes/tips4trip/img/pointer.png',
 			map: this.map
 		};
 

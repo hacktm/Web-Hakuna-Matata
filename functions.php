@@ -297,6 +297,8 @@ class Tips_for_Trip {
 		add_action( 'wp_ajax_nopriv_get_posts_in', array( $this, 'get_posts_in' ) );
 
 		remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
+		if(!is_admin())
+			add_filter( 'show_admin_bar', '__return_false' );
 	}
 
 	public function enqueue_scrips() {

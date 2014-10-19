@@ -19,19 +19,25 @@ if ( $user ) { ?>
 		<h3>My social life</h3>
 
 		<p class="social-icons">
-			<?php foreach( $theme->social_networks as $network => $name ): ?>
-				<a href="<?php echo get_the_author_meta( $network, $user->ID )?>" target="_blank" class="icon-<?php echo $network; ?>"></a>
-			<?php endforeach; ?>
+			<?php 
+				foreach( $theme->social_networks as $network => $name ): 
+					$link = get_the_author_meta( $network, $user->ID );
+					if( $link != '' ):
+			?>
+				<a href="<?php echo $link; ?>" target="_blank" class="icon-<?php echo $network; ?>"></a>
+			<?php 
+					endif;
+				endforeach;
+			?>
 			<a href="<?php echo get_the_author_meta( 'url', $user->ID ); ?>" target="_blank" class="icon-link"></a>
 		</p>
 		<h3>About me</h3>
 		<p class="description"><?php echo get_the_author_meta( 'description', $user->ID ); ?></p>
-		<h3>My social posts</h3>
 	</div>
 <?php } ?>
 
 <?php $category = strtoupper( get_query_var( 'category_name' ) ); ?>
-<div id="country-map" class="full-height" data-country='<?php echo json_encode( $country_bounds[$category] ); ?>' <?php echo $user ? "data='" . $user->ID . "'" : '';; ?>>
+<div id="country-map" class="full-height <?php if( $user ) echo 'has-sidebar'; ?>" data-country='<?php echo json_encode( $country_bounds[$category] ); ?>' <?php echo $user ? "data='" . $user->ID . "'" : '';; ?>>
 </div>
 <div class="articles">
 	<?php while ( have_posts() ) { the_post() ?>

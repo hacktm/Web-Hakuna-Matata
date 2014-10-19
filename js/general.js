@@ -51,7 +51,7 @@ window.fbAsyncInit = function() {
 		var options = {
 			dataMode: 'regions',
 			width: $('#main-geo-map').width(),
-			height: $('#main-geo-map').height(),
+			height: $('#main-geo-map').height() - 5,
 			colorAxis: {colors: ['#eee', '#060']},
 			backgroundColor: '#b3d1ff'
 		};
@@ -78,7 +78,7 @@ window.fbAsyncInit = function() {
 			var window_height = $(window).outerHeight();
 			var header_height = $('header').outerHeight();
 			var admin_bar_height = $('#wpadminbar').outerHeight();
-			$(this).height( window_height - header_height - admin_bar_height - 40);
+			$(this).height( window_height - header_height - admin_bar_height );
 		});
 
 		if( $('#main-geo-map').length )
