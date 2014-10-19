@@ -78,7 +78,11 @@ window.fbAsyncInit = function() {
 			var window_height = $(window).outerHeight();
 			var header_height = $('header').outerHeight();
 			var admin_bar_height = $('#wpadminbar').outerHeight();
-			$(this).height( window_height - header_height - admin_bar_height );
+			if( $(this).attr('id') == 'user-info' )
+				$(this).height( window_height - header_height - admin_bar_height - 40 );
+			else
+				$(this).height( window_height - header_height - admin_bar_height );
+
 		});
 
 		if( $('#main-geo-map').length )
