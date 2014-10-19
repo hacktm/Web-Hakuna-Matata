@@ -52,7 +52,7 @@ window.fbAsyncInit = function() {
 			dataMode: 'regions',
 			width: $('#main-geo-map').width(),
 			height: $('#main-geo-map').height() - 5,
-			colorAxis: {colors: ['#eee', '#060']},
+			colorAxis: {colors: ['#e0e0e0', '#060']},
 			backgroundColor: '#b3d1ff'
 		};
 

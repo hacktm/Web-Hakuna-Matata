@@ -20,9 +20,9 @@
 
 	    var options = {
 		dataMode: 'regions',
-		width: 395,
+		width: $('#travel-map').width(),
 		height: 395,
-		colorAxis: {colors: ['#eee', '#060']},
+		colorAxis: {colors: ['#e0e0e0', '#060']},
 		legend: 'none'
 	    };
 
