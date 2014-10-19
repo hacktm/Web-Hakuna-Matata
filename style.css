@@ -87,6 +87,17 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
 }
 
+#main-geo-map path {
+	cursor: pointer
+}
+#main-geo-map path[fill="#f5f5f5"] {
+	cursor: auto
+}
+#main-geo-map path[fill="none"] {
+	cursor: auto
+}
+
+.author,
 .home {
 	background-color: #b3d1ff;
 }
@@ -222,7 +233,7 @@ header {
 	background-color: #060;
 	color: #fff;
 	border-radius: 3px;
-	display: block;
+	display: inline-block;
 	float: left;
 	text-decoration: none;
 	font-weight: bold;

@@ -5,6 +5,10 @@ a {
 	color: #090;
 }
 
+.subsubsub a .count, .subsubsub a.current .count {
+	display: none;
+}
+
 a:hover {
 	color: #0a0;
 }

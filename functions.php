@@ -296,6 +296,9 @@ class Tips_for_Trip {
 		add_action( 'wp_ajax_get_posts_in', array( $this, 'get_posts_in' ) );
 		add_action( 'wp_ajax_nopriv_get_posts_in', array( $this, 'get_posts_in' ) );
 		add_action( 'init', array( $this, 'change_author_permalinks' ) );
+		add_filter( 'parse_query', array( $this, 'parse_query_useronly' ) );
+		add_action( 'init', array( $this, 'change_tax_object_label' ) );
+		add_action( 'admin_init', array( $this, 'deactivate_support' ) );
 
 		remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
 		if(!is_admin())
@@ -329,8 +332,37 @@ class Tips_for_Trip {
 
 	}
 
+	public function deactivate_support() {
+    		remove_post_type_support( 'post', 'comments' );
+	}
+
+	public function change_tax_object_label() {
+	  global $wp_taxonomies;
+	  $labels = &$wp_taxonomies['category']->labels;
+	  $labels->name = 'Countries';
+	  $labels->singular_name = 'Country';
+	  $labels->search_items = 'Search countries';
+	  $labels->all_items = 'All countries';
+	  $labels->parent_item = 'Country parent name';
+	  $labels->parent_item_colon = 'Country parent';
+	  $labels->edit_item = 'Edit country';
+	  $labels->view_item = 'View countries';
+	  $labels->update_item = 'Update country';
+	  $labels->add_new_item = 'Add new country';
+	  $labels->new_item_name = 'Your countries';
+	}
+
 	public function login_logo_url() {
 		return home_url();
+	}
+
+	function parse_query_useronly( $wp_query ) {
+		if ( strpos( $_SERVER[ 'REQUEST_URI' ], '/wp-admin/edit.php' ) !== false ) {
+			if ( !current_user_can( 'level_10' ) ) {
+				global $current_user;
+				$wp_query->set( 'author', $current_user->ID );
+        		}
+    		}
 	}
 
 	public function change_author_permalinks() {

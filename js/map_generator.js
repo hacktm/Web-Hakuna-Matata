@@ -30,7 +30,8 @@ function MapGenerator() {
 			center: center,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			streetViewControl: false,
-			styles: mapStyle
+			styles: mapStyle,
+			minZoom: 3
 		};
 
 		this.map = new google.maps.Map(document.getElementById(element), mapOptions);
