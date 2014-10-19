@@ -30,7 +30,7 @@ class Tips_for_Trip {
 			),
 			25 => array(
 				'title' => 'Courageous Tourist',
-				'description' => 'You get this badge after visiting twentyi-five countries.'
+				'description' => 'You get this badge after visiting twenty-five countries.'
 			),
 			50 => array(
 				'title' => 'Resilient Tourist',
@@ -60,7 +60,7 @@ class Tips_for_Trip {
 			),
 			25 => array(
 				'title' => 'Great Blogger',
-				'description' => 'You get this badge after writing twentyi-five articles.'
+				'description' => 'You get this badge after writing twenty-five articles.'
 			),
 			50 => array(
 				'title' => 'Excellent Blogger',

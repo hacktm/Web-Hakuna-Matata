@@ -46,9 +46,10 @@
 			<?php
 				$icon_classes = array( 'icon-pen', 'icon-pencil', 'icon-pencil-alt', 'icon-pencil-alt-1', 'icon-vector-pencil', 'icon-feather' );
 				$i = 0;
+				$user_post_count = count_user_posts( $usr->ID );
 			?>
 			<?php foreach( $theme->badges['posts'] as $threshold => $data ): ?>
-				<div class="badge <?php echo $icon_classes[$i]; ?>">
+				<div class="badge <?php echo $icon_classes[$i]; ?> <?php if( $user_post_count >= $threshold ) echo 'active'; ?>">
 					<div>
 						<h4><?php echo $data['title']; ?></h4>
 						<p><?php echo $data['description']; ?></p>

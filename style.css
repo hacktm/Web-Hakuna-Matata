@@ -276,6 +276,10 @@ header {
 	cursor: help;
 }
 
+.badge.active {
+	border-color: #060;
+}
+
 .badge div {
 	position: absolute;
 	width: 200px;
@@ -314,6 +318,10 @@ header {
 	font-size: 32px;
 	color: #ccc;
 	cursor: help;
+}
+
+.badge.active:before {
+	color: #060;
 }
 
 /** Map pointers **/
