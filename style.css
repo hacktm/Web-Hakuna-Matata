@@ -408,17 +408,52 @@ blockquote{
     font-weight: bold;
     border-left: solid;
     border-left-color: #060;
+    margin-left: 0;
 }
 
 .articles.hidden {
 	display: none;
 }
 #main-geo-map path {
-stroke-width:1; /* control the countries borders width */
-stroke:#999999; /* choose a color for the border */
+	stroke-width:1; /* control the countries borders width */
+	stroke:#999999; /* choose a color for the border */
 }
 
 #main-geo-map path:hover {
-stroke-width:1; /* control the countries borders width */
-stroke:#777; /* choose a color for the border */
+	stroke-width:1; /* control the countries borders width */
+	stroke:#777; /* choose a color for the border */
+}
+
+.content img {
+	max-width: 100%;
+	height: auto;
+}
+
+@media all and (max-width: 1110px) {
+	.single .container {
+		background-color: transparent;
+		width: 100%;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+}
+
+@media all and (max-width: 800px) {
+	.featured-image {
+		height: 300px;
+	}
+}
+
+@media all and (max-width: 640px) {
+	.featured-image {
+		height: 150px;
+	}
+}
+
+@media all and (max-width: 360px) {
+	#main-menu a {
+		margin-left: 5px;
+		font-size: 14px;
+	}
 }
