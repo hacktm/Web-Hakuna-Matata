@@ -522,14 +522,24 @@ class Tips_for_Trip {
 		</div>
 	<?php }
 
-	public function user_overview() { ?>
+	public function user_overview() {
+		$user_id = get_current_user_id();
+		$user_posts = count_user_posts( $user_id );
+		$user_countries = count( $this->user_category_count($user_id) );
+		$p = round( $user_countries / count( $this->countries ) * 100  , 2 );
+		$p = $p. '%';
+		$last_post = get_posts( array( 'author' => $user_id, 'posts_per_page' => 1 ) );
+		$last_post = reset( $last_post );
+		$cat = wp_get_post_terms( $last_post->ID, 'category' );
+		$cat = get_term( $cat[0]->term_id, 'category' );
+		?>
         <!--published travel stories-->
-        <p>Number of stories I published: <strong>46</strong></p>
+        <p>Number of stories I published: <strong><?php echo $user_posts; ?></strong></p>
         <!--total visited countries-->
         <p>Total no. of visited countries:</p>
-        <progress title="46/193" value="46" max="193"></progress>
+        <div class="progress-bar"><div class="progress-inner" style="width:<?php echo $p; ?>"></div></div>
         <!--last visited country-->
-        <p>Last visited country: <strong>Romania</strong></p>
+        <p>Last visited country: <strong> <?php echo $cat->name ?> </strong></p>
         <?php
 	}
 

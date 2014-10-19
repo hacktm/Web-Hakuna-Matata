@@ -15,7 +15,7 @@ if ( $user ) {
 <?php $category = strtoupper( get_query_var( 'category_name' ) ); ?>
 <div id="country-map" class="full-height <?php if( $user ) echo 'has-sidebar'; ?>" data-country='<?php echo json_encode( $country_bounds[$category] ); ?>' <?php echo $user ? "data-author='" . $user->ID . "'" : '';; ?>>
 </div>
-<div class="articles">
+<div class="articles hidden">
 	<?php while ( have_posts() ) { the_post() ?>
 		<?php
 			$pos = array(
