@@ -111,16 +111,24 @@ window.fbAsyncInit = function() {
 					$(this).remove();
 				});
 
-				function get_posts_cluster(page) {
+				var session_key = false;
+				function get_posts_cluster() {
 
 					var post = {
 						action: 'get_posts_in',
 						ne_lat: bounds.getNorthEast().lat(),
 						ne_lng: bounds.getNorthEast().lng(),
 						sw_lat: bounds.getSouthWest().lat(),
-						sw_lng: bounds.getSouthWest().lng(),
-						page: page
+						sw_lng: bounds.getSouthWest().lng()
 					};
+
+					var author = country_map.data( 'author' );
+					if( author ) {
+						post.author = author
+					}
+
+					if( session_key )
+						post.session_key = session_key;
 
 					$.ajax({
 						url: ajax.ajaxurl,
@@ -128,15 +136,18 @@ window.fbAsyncInit = function() {
 						data: post,
 						dataType: "json",
 						success: function(response){
-							response.forEach(function(post) {
+							if( response.session_key )
+								session_key = response.session_key;
+
+							response.posts.forEach(function(post) {
 								map.setExtraMarker(index++, post['lat'], post['lng'], {
 									info: post['info'],
 									title: post['title'],
 									clickable: true
 								});
 							});
-							if( response.length )
-								get_posts_cluster(page+1);
+							if( response.posts.length )
+								get_posts_cluster();
 						}
 					});
 				}
@@ -145,7 +156,7 @@ window.fbAsyncInit = function() {
 				google.maps.event.addListener(map.map, "bounds_changed", function() {
 					// send the new bounds back to your server
 					bounds = map.map.getBounds();
-					get_posts_cluster(1);
+					get_posts_cluster();
 				});
 			}
 		}

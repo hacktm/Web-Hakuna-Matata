@@ -463,7 +463,7 @@ class Tips_for_Trip {
 			'edit_published_posts' => true,
 			'publish_posts' => true,
 			'delete_posts' => true,
-			'delete_published' => true,
+			'delete_published_posts' => true,
 			'edit_others_posts' => false,
 			'moderate_comments' => false,
 			'upload_files' => true
@@ -527,6 +527,15 @@ class Tips_for_Trip {
 
 	function modify_category_query( $query ) {
 		if( $query->is_main_query() && $query->is_category() ) {
+			$query->set( 'posts_per_page', '-1' );
+			if( isset( $_GET['traveler'] ) ) {
+				$user = get_user_by( 'login', $_GET['traveler'] );
+				if( $user ) {
+					$query->set( 'author', $user->ID );
+				}
+			}
+		}
+		if( $query->is_main_query() && $query->is_author() ) {
 			$query->set( 'posts_per_page', '-1' );
 		}
 	}
@@ -603,24 +612,46 @@ class Tips_for_Trip {
 			)
 		);
 
+		$response = array();
 		if( $_POST['author'] )
 			$args['author'] = intval( $_POST['author']);
+
+
+		$exclude = array();
+
+		if( $_POST['session_key'] ) {
+			$exclude = get_transient( $_POST['session_key'] );
+			if( $exclude )
+				$args['post__not_in'] = $exclude;
+			else
+				$exclude = array();
+			$response['session_key'] = $_POST['session_key'];
+
+		}
+		if( ! $response['session_key'] ) {
+			$response['session_key'] = md5( $args . strtotime( 'now' ) . $_SERVER['REMOTE_ADDR'] . rand() );
+		}
+
 
 		$posts = new WP_Query($args);
 
 		$push_posts =  array();
 		while( $posts->have_posts() ) { $posts->the_post();
+			$exclude[] = get_the_ID();
 			$info = '<h2 class="title">' . get_the_title() . '</h2>';
-			$info.= '<div class="excerpt">' . get_the_excerpt() . '</div>';
-			$info.= '<a href="' . get_the_permalink() . '">' . __( 'Read more', 'tipsfortrips' ) . '</a>';
+			$info.= '<div class="excerpt">' . wpautop( get_the_excerpt() ) . '</div>';
+			$info.= '<a class="link" href="' . get_the_permalink() . '">' . __( 'Read more', 'tipsfortrips' ) . '</a>';
 			$push_posts[] = array(
 				'title' => get_the_title(),
 				'info' => $info,
 				'lat' => get_post_meta( get_the_ID(), 'lat', true ),
 				'lng' => get_post_meta( get_the_ID(), 'lng', true )
 			);
+
 		}
-		echo json_encode( $push_posts );
+		set_transient( $response['session_key'], $exclude, 30*60 + strtotime('now') );
+		$response['posts'] = $push_posts;
+		echo json_encode( $response );
 		exit();
 	}
 }
