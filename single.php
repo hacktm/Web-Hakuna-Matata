@@ -11,7 +11,7 @@
 		$cat = reset( $cats );
 		echo '<a href="' . get_category_link( $cat->term_id ) . '">' . $cat->cat_name . '</a>';
 	    ?></div>
-            <div class="content"><?php the_content();?></div>
+            <div class="content clearfix"><?php the_content();?></div>
     <?php endwhile; endif; ?>
 </div>
 
