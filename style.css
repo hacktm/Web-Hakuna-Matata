@@ -134,6 +134,13 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
 }
 
+.error404 .container {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 300px;
+}	
+
 #main-geo-map path {
 	cursor: pointer
 }
