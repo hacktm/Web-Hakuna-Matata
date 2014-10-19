@@ -90,6 +90,23 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0 auto;
 }
 
+.single   {
+
+	background-color: #f5f5f5;
+}
+
+.featured-image {
+	height: 500px;
+}
+
+
+.single .container  {
+	width: 960px;
+	background-color: #fff;
+	margin: 0px 20px 20px 20px auto;
+	padding: 20px 30px 20px 30px;
+}
+
 /** Admin bar **/
 
 #wpadminbar .quicklinks .menupop ul li a:focus, #wpadminbar .quicklinks .menupop ul li a:focus strong, #wpadminbar .quicklinks .menupop ul li a:hover, #wpadminbar .quicklinks .menupop ul li a:hover strong, #wpadminbar .quicklinks .menupop.hover ul li a:focus, #wpadminbar .quicklinks .menupop.hover ul li a:hover, #wpadminbar li .ab-item:focus:before, #wpadminbar li a:focus .ab-icon:before, #wpadminbar li.hover .ab-icon:before, #wpadminbar li.hover .ab-item:before, #wpadminbar li:hover #adminbarsearch:before, #wpadminbar li:hover .ab-icon:before, #wpadminbar li:hover .ab-item:before, #wpadminbar.nojs .quicklinks .menupop:hover ul li a:focus, #wpadminbar.nojs .quicklinks .menupop:hover ul li a:hover {
@@ -136,6 +153,7 @@ header {
 	font-size: 16px;
 	text-decoration: none;
 }
+
 
 #main-geo-map {
 	width: 100%;

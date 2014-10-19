@@ -1,6 +1,8 @@
 <?php get_header(); ?>
 
-<?php the_post_thumbnail('single-image') ?>
+<div class="featured-image">
+	<?php the_post_thumbnail('single-image'); ?>
+</div>
 
 <div class="container">
     <?php if (have_posts()) : while (have_posts()) : the_post();?>
