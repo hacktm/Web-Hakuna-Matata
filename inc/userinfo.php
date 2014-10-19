@@ -32,9 +32,13 @@
 				$icon_classes = array( 'icon-child', 'icon-bicycle', 'icon-bus', 'icon-belowground-rail', 'icon-airport', 'icon-globe' );
 				$i = 0;
 			?>
+			<?php
+				$categories = $theme->user_category_count( $usr->ID );
+				$user_country_count = count( $categories );
+			?>
 			<?php foreach( $theme->badges['countries'] as $threshold => $data ): ?>
 			
-				<div class="badge <?php echo $icon_classes[$i]; ?>">
+				<div class="badge <?php echo $icon_classes[$i]; ?> <?php if( $user_country_count >= $threshold ) echo 'active'; ?>">
 					<div>
 						<h4><?php echo $data['title']; ?></h4>
 						<p><?php echo $data['description']; ?></p>

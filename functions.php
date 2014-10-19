@@ -406,6 +406,19 @@ class Tips_for_Trip {
 	  $labels->new_item_name = 'Your countries';
 	}
 
+	public function user_category_count( $user_ID ) {
+		global $wpdb;
+		return $wpdb->get_results("SELECT  $wpdb->terms.name, COUNT($wpdb->posts.ID) as count FROM $wpdb->posts
+		LEFT JOIN $wpdb->term_relationships ON($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+		LEFT JOIN $wpdb->term_taxonomy ON($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
+		LEFT JOIN $wpdb->terms ON($wpdb->terms.term_id = $wpdb->term_taxonomy.term_id)
+		WHERE $wpdb->term_taxonomy.taxonomy = 'category'
+		AND $wpdb->posts.post_status = 'publish'
+		AND post_author = '". intval( $user_ID ) ."'
+		GROUP BY $wpdb->term_taxonomy.term_id
+		");
+	}
+
 	public function login_logo_url() {
 		return home_url();
 	}
@@ -496,8 +509,15 @@ class Tips_for_Trip {
 		}
 	}
 
-	public function user_travel_map_widget() { ?>
-		<div id="travel-map" data-countries='<?php echo json_encode( array( 'Russia', 'United States', 'Romania' ) ); ?>'>
+	public function user_travel_map_widget() {
+		$user = get_current_user_id();
+		$cats = array();
+		$cat_count = $this->user_category_count($user);
+		foreach( $cat_count as $cat ) {
+			$cats[] = $cat->name;
+		}
+		?>
+		<div id="travel-map" data-countries='<?php echo json_encode( $cats ); ?>'>
 
 		</div>
 	<?php }
